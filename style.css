@@ -200,7 +200,7 @@ body {
 .deck-area {
     position: absolute;
     top: 50%;
-    right: 200px;
+    right: 500px;
     transform: translateY(-50%);
 }
 
@@ -439,10 +439,11 @@ body {
     gap: 10px;
     max-height: calc(100vh - 300px);
     overflow-y: auto;
+    padding-right: 20px;
 }
 
 .played-cards-area::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
 }
 
 .played-cards-area::-webkit-scrollbar-track {

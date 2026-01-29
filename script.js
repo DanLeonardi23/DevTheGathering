@@ -76,11 +76,11 @@ function declineInterview() {
 const projectsData = [
     {
         id: 1,
-        title: "Landing Page Responsiva",
+        title: "jogasarue",
         type: "Website",
-        icon: "🎨",
+        icon: "🌐",
         techs: ["HTML", "CSS", "JavaScript"],
-        link: "https://github.com/seu-usuario/projeto1"
+        link: "https://danleonardi23.github.io/jogasarue-page/"
     },
     {
         id: 2,
