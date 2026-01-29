@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Portfolio TCG - Entrevista de Emprego</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Tela de Introdução -->
+    <div class="intro-screen" id="introScreen">
+        <div class="intro-avatar">
+            <img src="" alt="Recrutador" id="introAvatarImg">
+        </div>
+        <div class="intro-bubble" id="introBubble">
+            Olá! Você está pronto para a entrevista?
+        </div>
+        <div class="intro-buttons" id="introButtons">
+            <button class="intro-btn intro-btn-yes" onclick="startInterview()">Sim</button>
+            <button class="intro-btn intro-btn-no" onclick="declineInterview()">Não</button>
+        </div>
+        <div class="intro-response" id="introResponse"></div>
+    </div>
+
+    <div class="game-table">
+        <!-- Redes Sociais -->
+<div class="social-links">
+    <a href="https://github.com/DanLeonardi23" target="_blank" class="social-icon" title="GitHub">
+        <img src="images/social/github.png" alt="GitHub">
+    </a>
+    <a href="https://www.linkedin.com/in/daniel-leonardi-21a41954/" target="_blank" class="social-icon" title="LinkedIn">
+        <img src="images/social/linkedin.png" alt="LinkedIn">
+    </a>
+    <a href="https://www.instagram.com/danleonardi/" target="_blank" class="social-icon" title="Instagram">
+        <img src="images/social/instagram.png" alt="Instagram">
+    </a>
+</div>
+        <!-- Recrutador -->
+        <div class="recruiter-area">
+            <div class="recruiter-avatar">
+                <img src="" alt="Recrutador" id="recruiterAvatarImg">
+            </div>
+            <div class="speech-bubble" id="recruiterSpeech">
+                Olá! Vamos começar a entrevista. Mostre-me seus projetos!
+            </div>
+        </div>
+
+        <!-- Barra de Progresso -->
+        <div class="progress-container">
+            <div class="progress-labels">
+                <span class="label-rejected">😰 QUE PENA.</span>
+                <span class="label-hired">🎉 BOA!</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBar"></div>
+                <div class="progress-marker"></div>
+            </div>
+        </div>
+
+        <!-- Zona de Drop -->
+        <div class="drop-zone" id="dropZone">
+            <div class="drop-zone-icon">🎯</div>
+            <div class="drop-zone-text">Coloque seu projeto aqui.</div>
+        </div>
+
+        <!-- Área de cartas jogadas -->
+        <div class="played-cards-area" id="playedCardsArea"></div>
+
+        <!-- Deck -->
+        <div class="deck-area">
+            <div class="deck-counter" id="deckCounter">10 / 10</div>
+            <div class="deck-pile" id="deckPile">
+                <div class="deck-card">🎴</div>
+            </div>
+        </div>
+
+        <!-- Mão do Jogador -->
+        <div class="player-hand" id="playerHand">
+            <div class="hand-slot"></div>
+            <div class="hand-slot"></div>
+            <div class="hand-slot"></div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <!-- Modal de Fim de Jogo -->
+    <div class="game-over-modal" id="gameOverModal">
+        <div class="modal-content" id="modalContent">
+            <h2 id="modalTitle">🎉 CONTRATADO!</h2>
+            <p id="modalText">Parabéns! Você impressionou o recrutador com seus projetos!</p>
+            <button class="btn-restart" onclick="restartGame()">Jogar Novamente</button>
+        </div>
+    </div>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    
+    <!-- Script principal -->
+    <script src="script.js"></script>
+</body>
+</html>
