@@ -220,11 +220,14 @@ function createCard(project, faceDown = false) {
 
     if (faceDown) {
         // Carta virada para baixo (verso)
-        card.innerHTML = `
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 60px;">
-                🎴
-            </div>
-        `;
+       card.innerHTML = `
+  <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+    <img src="images/logo.png"
+         alt="logo dev the gathering"
+         style="width: 100%; height: 100%; object-fit: contain;">
+  </div>
+`;
+
         card.classList.add('face-down');
     } else {
         // Carta virada para cima (frente)
