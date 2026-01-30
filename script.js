@@ -78,15 +78,16 @@ const projectsData = [
         id: 1,
         title: "jogasarue",
         type: "Website",
-        icon: "🌐",
+        image: "images/projects/jogasarue.png",
         techs: ["HTML", "CSS", "JavaScript"],
-        link: "https://danleonardi23.github.io/jogasarue-page/"
+        link: "https://danleonardi23.github.io/jogasarue-page/",
+        description: "Landing page moderna e responsiva para divulgação de eventos e serviços da jogasarue. Desenvolvida com foco em design limpo e experiência do usuário."
     },
     {
         id: 2,
         title: "Dashboard Admin",
         type: "Dashboard",
-        icon: "📊",
+        image: "images/projects/wip.png",
         techs: ["React", "Chart.js", "API"],
         link: "https://github.com/seu-usuario/projeto2"
     },
@@ -94,7 +95,7 @@ const projectsData = [
         id: 3,
         title: "E-commerce",
         type: "Website",
-        icon: "🛒",
+        image: "images/projects/wip.png",
         techs: ["JavaScript", "CSS", "API"],
         link: "https://github.com/seu-usuario/projeto3"
     },
@@ -102,7 +103,7 @@ const projectsData = [
         id: 4,
         title: "To-Do App",
         type: "Aplicativo",
-        icon: "✅",
+        image: "images/projects/wip.png",
         techs: ["React", "LocalStorage"],
         link: "https://github.com/seu-usuario/projeto4"
     },
@@ -110,7 +111,7 @@ const projectsData = [
         id: 5,
         title: "Blog Pessoal",
         type: "Website",
-        icon: "📝",
+        image: "images/projects/wip.png",
         techs: ["HTML", "CSS", "JavaScript"],
         link: "https://github.com/seu-usuario/projeto5"
     },
@@ -118,15 +119,15 @@ const projectsData = [
         id: 6,
         title: "Calculadora",
         type: "Aplicativo",
-        icon: "🔢",
+        image: "images/projects/wip.png",
         techs: ["JavaScript", "CSS"],
         link: "https://github.com/seu-usuario/projeto6"
     },
     {
         id: 7,
-        title: "Portfolio Site",
+        title: "Div: The Gathering",
         type: "Website",
-        icon: "💼",
+        image: "images/projects/logo-dtg.png",
         techs: ["HTML", "CSS", "JavaScript"],
         link: "https://github.com/seu-usuario/projeto7"
     },
@@ -134,15 +135,15 @@ const projectsData = [
         id: 8,
         title: "Weather App",
         type: "Aplicativo",
-        icon: "🌤️",
+        image: "images/projects/wip.png",
         techs: ["API", "JavaScript", "CSS"],
         link: "https://github.com/seu-usuario/projeto8"
     },
     {
         id: 9,
-        title: "Quiz Game",
+        title: "Palo Seco",
         type: "Jogo",
-        icon: "🎮",
+        image: "images/projects/paloseco.png",
         techs: ["JavaScript", "HTML", "CSS"],
         link: "https://github.com/seu-usuario/projeto9"
     },
@@ -150,7 +151,7 @@ const projectsData = [
         id: 10,
         title: "Chat Interface",
         type: "Aplicativo",
-        icon: "💬",
+        image: "images/projects/wip.png",
         techs: ["React", "CSS", "WebSocket"],
         link: "https://github.com/seu-usuario/projeto10"
     }
@@ -182,7 +183,10 @@ function initGame() {
     shuffleDeck();
     updateDeckCounter();
     createDeckTopCard();
-    makeNextRequest();
+    
+    // Mensagem inicial - não faz pedido ainda
+    const speech = document.getElementById('recruiterSpeech');
+    speech.textContent = 'Vamos ver o que você trouxe para nós. Compre suas primeiras 3 cartas.';
 }
 
 function shuffleDeck() {
@@ -231,11 +235,14 @@ function createCard(project, faceDown = false) {
         card.classList.add('face-down');
     } else {
         // Carta virada para cima (frente)
-        card.innerHTML = `
-            <div class="card-header">
-                <div class="card-icon">${project.icon}</div>
-                <div class="card-title">${project.title}</div>
-            </div>
+        // Carta virada para cima (frente)
+card.innerHTML = `
+    <div class="card-header">
+        <div class="card-image-container">
+            <img src="${project.image}" alt="${project.title}" class="card-project-image">
+        </div>
+        <div class="card-title">${project.title}</div>
+    </div>
             <div class="card-body">
                 <div class="card-type">${project.type}</div>
                 <div class="card-techs">
@@ -371,12 +378,30 @@ function addCardToHand(card) {
             
             deckTopCard = null;
             createDeckTopCard();
+
+            // Verificar se completou 3 cartas pela primeira vez
+            checkHintVisibility();
         }
     });
 }
 
 function checkDeckEmpty() {
     return deck.length === 0;
+}
+
+// Verificar se deve mostrar ou esconder o aviso
+function checkHintVisibility() {
+    // Verificar se é a primeira vez que completa a mão
+    if (hand.length >= 3 && currentRequest === null) {
+        // Mostrar mensagem "Vamos lá!" e iniciar o jogo
+        const speech = document.getElementById('recruiterSpeech');
+        speech.textContent = 'Vamos lá!';
+        
+        // Aguardar 2 segundos e fazer o primeiro pedido
+        setTimeout(() => {
+            makeNextRequest();
+        }, 2000);
+    }
 }
 
 // ===== SISTEMA DE CARTAS NA MÃO =====
@@ -434,12 +459,28 @@ function playCard(card) {
             y: targetY,
             duration: 0.5,
             ease: "power2.out",
-            onComplete: () => {
-                card.classList.add('played');
-                playedArea.appendChild(card);
-                gsap.set(card, { x: 0, y: 0, position: 'relative' });
-                playedCards.push(card);
-            }
+           onComplete: () => {
+    card.classList.add('played');
+    playedArea.appendChild(card);
+    gsap.set(card, { x: 0, y: 0, position: 'relative' });
+    playedCards.push(card);
+    
+    // Adicionar evento de hover para preview (exceto no link)
+    const projectId = parseInt(card.dataset.id);
+    const project = projectsData.find(p => p.id === projectId);
+    
+    card.addEventListener('mouseenter', function(e) {
+        // Não mostrar preview se estiver sobre o link
+        if (!e.target.classList.contains('card-link')) {
+            showCardPreview(project);
+        }
+    });
+    
+    // Esconder quando sair da carta
+    card.addEventListener('mouseleave', function() {
+        hideCardPreview();
+    });
+} 
         });
         
         setTimeout(() => {
@@ -571,6 +612,44 @@ function endGameDeckEmpty() {
 function restartGame() {
     location.reload();
 }
+
+// ===== PREVIEW DE CARTA EXPANDIDA =====
+function showCardPreview(project) {
+    const overlay = document.getElementById('cardPreviewOverlay');
+    const previewImage = document.getElementById('previewImage');
+    const previewTitle = document.getElementById('previewTitle');
+    const previewType = document.getElementById('previewType');
+    const previewTechs = document.getElementById('previewTechs');
+    const previewDescription = document.getElementById('previewDescription');
+
+    // Preencher dados
+    previewImage.src = project.image;
+    previewImage.alt = project.title;
+    previewTitle.textContent = project.title;
+    previewType.textContent = project.type;
+    previewTechs.innerHTML = project.techs.map(tech => 
+        `<span class="tech-tag">${tech}</span>`
+    ).join('');
+    previewDescription.textContent = project.description || 'Projeto desenvolvido com dedicação e atenção aos detalhes.';
+
+    // Mostrar overlay
+    overlay.classList.add('active');
+}
+
+function hideCardPreview() {
+    const overlay = document.getElementById('cardPreviewOverlay');
+    overlay.classList.remove('active');
+}
+
+// Fechar preview ao clicar fora
+document.addEventListener('click', function(e) {
+    const overlay = document.getElementById('cardPreviewOverlay');
+    const preview = document.getElementById('cardPreview');
+    
+    if (overlay.classList.contains('active') && !preview.contains(e.target)) {
+        hideCardPreview();
+    }
+});
 
 // ===== PASSAR VEZ (ESPAÇO) =====
 document.addEventListener('keydown', function(e) {
