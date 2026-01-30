@@ -81,7 +81,7 @@ const projectsData = [
         image: "images/projects/jogasarue.png",
         techs: ["HTML", "CSS", "JavaScript"],
         link: "https://danleonardi23.github.io/jogasarue-page/",
-        description: "Landing page moderna e responsiva para divulgação de eventos e serviços da jogasarue. Desenvolvida com foco em design limpo e experiência do usuário."
+        description: "Um projeto pessoal para compartilhar minha paixão por jogos de tabuleiro e criatividade."
     },
     {
         id: 2,
@@ -186,7 +186,7 @@ function initGame() {
     
     // Mensagem inicial - não faz pedido ainda
     const speech = document.getElementById('recruiterSpeech');
-    speech.textContent = 'Vamos ver o que você trouxe para nós. Compre suas primeiras 3 cartas.';
+    speech.innerHTML = 'Vamos ver o que você trouxe para nós. <br>Compre suas primeiras 3 cartas.';
 }
 
 function shuffleDeck() {
