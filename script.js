@@ -364,7 +364,7 @@ function addCardToHand(card) {
     gsap.to(card, {
         left: slotRect.left,
         top: slotRect.top,
-        duration: 0.4,
+        duration: 0.4, //velocidade do movimento da carta na mesa
         ease: "power2.out",
         onComplete: () => {
             card.remove();
@@ -459,7 +459,7 @@ function playCard(card) {
             y: targetY,
             duration: 0.5,
             ease: "power2.out",
-           onComplete: () => {
+    onComplete: () => {
     card.classList.add('played');
     playedArea.appendChild(card);
     gsap.set(card, { x: 0, y: 0, position: 'relative' });
@@ -480,7 +480,14 @@ function playCard(card) {
     card.addEventListener('mouseleave', function() {
         hideCardPreview();
     });
-} 
+    
+    // Verificar se deck está vazio e mão está vazia
+    if (checkDeckEmpty() && hand.length === 0) {
+        setTimeout(() => {
+            endGameDeckEmpty();
+        }, 500);
+    }
+}
         });
         
         setTimeout(() => {
